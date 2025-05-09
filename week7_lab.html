@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Week 7 - Peso Ideal y Ticket Cine</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+    h2 {
+      margin-top: 40px;
+    }
+    .section {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      margin-bottom: 40px;
+    }
+    .ticket {
+      width: 300px;
+      height: 200px;
+      background: url('https://i.imgur.com/Hqdy4M3.png') no-repeat center center;
+      background-size: cover;
+      position: relative;
+      padding: 20px;
+      color: #000;
+      font-weight: bold;
+    }
+    .ticket .info {
+      position: absolute;
+      left: 20px;
+    }
+    .ticket .nombre { top: 40px; }
+    .ticket .fecha { top: 80px; }
+    .ticket .butaca { top: 120px; }
+  </style>
+</head>
+<body>
+
+  <!-- PESO IDEAL -->
+  <div class="section">
+    <h2>1. Calcular Peso Ideal (IMC)</h2>
+    <label>Altura (m): <input type="number" id="altura" step="0.01"></label><br><br>
+    <label>Peso (kg): <input type="number" id="peso" step="0.1"></label><br><br>
+    <button onclick="calcularIMC()">Calcular IMC</button>
+    <div id="resultadoIMC" style="margin-top: 10px;"></div>
+  </div>
+
+  <!-- TICKET CINE -->
+  <div class="section">
+    <h2>2. Rellenar Ticket de Cine</h2>
+    <label>Nombre: <input type="text" id="nombreTicket"></label><br><br>
+    <label>Fecha: <input type="date" id="fechaTicket"></label><br><br>
+    <label>Fila: <input type="text" id="filaTicket" size="3"></label>
+    <label>Asiento: <input type="text" id="asientoTicket" size="3"></label><br><br>
+    <button onclick="actualizarTicket()">Enviar</button>
+
+    <div class="ticket" style="margin-top: 20px;">
+      <div class="info nombre" id="ticketNombre"></div>
+      <div class="info fecha" id="ticketFecha"></div>
+      <div class="info butaca" id="ticketButaca"></div>
+    </div>
+  </div>
+
+  <script>
+    function calcularIMC() {
+      const altura = parseFloat(document.getElementById("altura").value);
+      const peso = parseFloat(document.getElementById("peso").value);
+
+      if (isNaN(altura) || isNaN(peso) || altura <= 0) {
+        document.getElementById("resultadoIMC").innerText = "Por favor, introduce valores válidos.";
+        return;
+      }
+
+      const imc = peso / (altura * altura);
+      let mensaje = `Para la altura ${altura} m y el peso ${peso} kg, tu IMC es ${imc.toFixed(2)}.`;
+
+      if (imc < 18.5) {
+        mensaje += " Estás por debajo del peso recomendado.";
+      } else if (imc >= 18.5 && imc <= 24.9) {
+        mensaje += " Estás en un peso saludable.";
+      } else {
+        mensaje += " Estás por encima del peso recomendado.";
+      }
+
+      document.getElementById("resultadoIMC").innerText = mensaje;
+    }
+
+    function actualizarTicket() {
+      const nombre = document.getElementById("nombreTicket").value;
+      const fecha = document.getElementById("fechaTicket").value;
+      const fila = document.getElementById("filaTicket").value;
+      const asiento = document.getElementById("asientoTicket").value;
+
+      document.getElementById("ticketNombre").innerText = `Nombre: ${nombre}`;
+      document.getElementById("ticketFecha").innerText = `Fecha: ${fecha}`;
+      document.getElementById("ticketButaca").innerText = `Butaca: Fila ${fila}, Asiento ${asiento}`;
+    }
+  </script>
+
+</body>
+</html>
